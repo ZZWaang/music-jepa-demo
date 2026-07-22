@@ -1,0 +1,425 @@
+:root {
+  --page-bg: #f7f7f8;
+  --card-bg: #ffffff;
+  --border: #dedede;
+  --muted: #666;
+  --text: #222;
+}
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.page-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 42px 20px 64px;
+}
+
+.hero-block {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.hero-block h1 {
+  font-size: 2.5rem;
+  font-weight: 750;
+  margin-bottom: 8px;
+}
+
+.subtitle-text {
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.intro-block {
+  background: transparent;  
+  border: none;             
+  padding: 0;               
+  margin-bottom: 16px;      
+}
+
+.intro-block h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.section-gap {
+  margin-top: 60px;
+}
+
+.sample-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.sample-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 22px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.045);
+}
+
+.sample-card-header {
+  margin-bottom: 16px;
+}
+
+.sample-card-header h3 {
+  font-size: 1.28rem;
+  font-weight: 750;
+  margin: 0;
+}
+
+.sample-grid {
+  display: grid;
+  grid-template-columns: 0.75fr 1fr 0.18fr 1fr 0.22fr 2fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.col-header {
+  text-align: center;
+  font-weight: 700;
+  color: #555;
+}
+
+.row-label {
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  line-height: 1.2;
+  max-width: 120px;   /* 关键：统一宽度 */
+}
+
+.sample-cell {
+  min-width: 0;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.img-wrapper {
+  height: 150px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img-wrapper img,
+.sample-cell img {
+  display: block;
+  width: 200%;
+  height: 150px;
+  object-fit: contain;
+  border: none;
+  background: transparent;
+}
+
+.pianoroll-img {
+  object-fit: fill;
+}
+
+.sample-cell audio {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 8px;
+}
+
+.op-cell {
+  height: 150px;
+  align-self: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #444;
+}
+
+.arrow-cell {
+  font-size: 2.6rem;
+}
+
+.sample-tabs {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 24px 0;
+  flex-wrap: wrap;
+}
+
+.sample-tab {
+  border: 1px solid #ccc;
+  background: white;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.sample-tab.active {
+  background: #222;
+  color: white;
+  border-color: #222;
+}
+
+.audio-table {
+  display: grid;
+  grid-template-columns: 1.0fr repeat(5, minmax(120px, 1fr));
+  gap: 10px;
+  align-items: center;
+  overflow-x: auto;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 18px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.045);
+}
+
+.ood-audio-table {
+  grid-template-columns: 1.0fr repeat(4, minmax(120px, 1fr));
+}
+
+.audio-header {
+  font-weight: 700;
+  color: #555;
+  text-align: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.audio-label {
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.audio-label strong {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.audio-label span {
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.audio-cell audio {
+  display: block;
+  width: 100%;
+  min-width: 120px;
+}
+
+/* ===== Added Section: OOD visual comparison ===== */
+.ood-visual-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.ood-visual-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 22px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.045);
+}
+
+.ood-visual-header {
+  margin-bottom: 18px;
+}
+
+.ood-visual-header h3 {
+  font-size: 1.28rem;
+  font-weight: 750;
+  margin: 0 0 4px 0;
+}
+
+.ood-visual-header p {
+  margin: 0;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.ood-visual-grid {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 16px 18px;
+  align-items: start;
+}
+
+.ood-visual-label {
+  font-weight: 700;
+  color: #333;
+  padding-top: 8px;
+}
+
+.ood-visual-cell {
+  min-width: 0;
+  width: 100%;
+}
+
+.ood-visual-cell img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: none;
+  background: transparent;
+}
+
+.ood-visual-cell audio {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+}
+
+@media (max-width: 900px) {
+  .sample-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .col-header {
+    display: none;
+  }
+
+  .row-label {
+    height: auto;
+    margin-top: 16px;
+    font-size: 1.05rem;
+  }
+
+  .op-cell {
+    display: none;
+  }
+
+  .audio-table {
+    grid-template-columns: 1fr;
+  }
+
+  .audio-header {
+    display: none;
+  }
+
+  .audio-label {
+    margin-top: 18px;
+    font-size: 1rem;
+  }
+
+  .ood-visual-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ood-visual-label {
+    margin-top: 16px;
+    padding-top: 0;
+  }
+}
+
+.ood-name {
+  display: block;
+}
+
+.ood-title {
+  font-weight: 600;
+}
+
+.ood-subtitle {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* new */
+.demo-intro {
+  max-width: 1180px;
+  margin: 0 auto 30px;
+  line-height: 1.65;
+  font-size: 1.05rem;
+}
+
+.demo-links {
+  margin-top: 14px;
+  padding-left: 30px;
+}
+
+.demo-links li {
+  margin: 6px 0;
+  list-style-type: disc
+}
+
+.demo-links a {
+  color: #1a5fb4;
+  text-decoration: none;
+}
+
+.demo-links a:hover {
+  text-decoration: underline;
+}
+
+.correction-block h2 {
+  font-size: 1.2rem;
+  font-weight: 750;
+  margin-bottom: 8px;
+}
+
+.correction-block ol {
+  padding-left: 30px;
+}
+
+.correction-block li {
+  margin-bottom: 8px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.correction-block {
+  max-width: 1180px;
+  margin: 0 auto 50px;
+  padding: 16px 20px;
+
+  background: #fafafa;          
+  /* border-left: 4px solid #333;   */
+  border-left: 4px solid #595858;  
+  line-height: 1.6;
+}
+
+.reference-list {
+  padding-left: 24px;
+}
+
+.reference-list li {
+  margin: 10px 0;
+  line-height: 1.2;
+}
+
+.demo-intro,
+.intro-block,
+.correction-block {
+  font-size: 1.0rem;
+}
+
+.reference-list {
+  font-size: 1.0rem;
+}
+
+.demo-intro h2,
+.intro-block h2 {
+  font-size: 1.8rem;
+}
+
+
+.correction-block h2 {
+  font-size: 1.2rem;
+}
+
+body p {
+  margin-bottom: 10px;
+}

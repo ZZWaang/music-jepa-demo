@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Music-JEPA Demo Page</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+  };
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+  <main class="page-container">
+    <header class="hero-block">
+      <h1>Music-JEPA: Learning a World Model of Sound from Action</h1>
+      <p class="subtitle-text">Anonymous Authors</p>
+    </header>
+
+    <section class="demo-intro">
+      <p>
+        This is the demo page for the paper
+        <em>Music-JEPA: Learning a World Model of Sound from Action</em>.
+        We model the temporal dynamics of music audio in latent space, conditioned on action,
+        using a Joint Embedding Predictive Architecture (JEPA). This page provides additional
+        audible materials to supplement the submission. The demo page is organized into three parts:
+      </p>
+
+      <ul class="demo-links">
+        <li><a href="#one-step-section">Action-conditioned prediction (see Figure 3 and Section 4.3)</a></li>
+        <li><a href="#tc-section">Piano transcription via planning (see Section 4.5)</a></li>
+        <li><a href="#ood-section">Transcription on out-of-distribution (OOD) samples</a></li>
+      </ul>
+    </section>
+
+    <section class="correction-block">
+      <h2>Corrections and clarifications to the submitted manuscript</h2>
+
+      <ol>
+        <li>
+          <strong>Table 2</strong>:
+          The model name in the second row should be <strong>AO-JEPA</strong>,
+          our audio-only JEPA baseline, instead of <strong>M-JEPA</strong>.
+        </li>
+
+        <li>
+          <strong>Table 3</strong>:
+          The MAE feature for evaluating pedal prediction was introduced by Zhang et al. <a href="#ref-1">[1]</a>.
+          It is computed as the mean absolute error between predicted and ground-truth pedal curves
+          at 100 frames per second.
+        </li>
+      </ol>
+    </section>
+
+    <section id="one-step-section" class="intro-block">
+      <h2>Part 1: Action-Conditioned Prediction</h2>
+      <p>
+      To reveal the temporal dynmaics of Music-JEPA, we provide samples (corresponding to Figure 3) showing the transition from the current audio state $s_{t}$ (spectrogram) and an action state $a_{t+1}$ (pianoroll and pedal) to the resulting audio state $s_{t+1}$. 
+      The ground-truth and prediction rows use the same action, while the counterfactual row uses a modified action. 
+      Predictions are performed in latent space and then decoded into spectrograms using a separate decoder.
+      </p>
+      <p>
+      The audio below each spectrogram is synthesized from the reconstructed spectrogram via the Griffin–Lim algorithm, 
+      while the audio below each pianoroll is rendered from MIDI using a standard soundfont. 
+      <strong>These reconstructions are not intended for high-fidelity audio reproduction</strong>, but rather to illustrate the learned latent representations and temporal dynamics. 
+      As phase is not explicitly modeled, the resulting audio may exhibit perceptual artifacts.
+      </p>
+      <p>
+      Click the tabs to switch between samples.
+      </p>
+    </section>
+
+    <div id="sample-tabs" class="sample-tabs"></div>
+    <section id="demo-root" class="sample-list"></section>
+
+    <section id="tc-section" class="intro-block section-gap">
+      <h2>Part 2: Piano Transcription via Planning</h2>
+      <p>
+        Music-JEPA can achieve piano transcription via planning in the latent space (as discussed in Section 4.5). 
+        Below are comparisons of transcription outputs on selected audio examples. Each row shows the original audio
+        and synthesized transcription outputs from our method, Yan et al. <a href="#ref-2">[2]</a>, Kong et al. <a href="#ref-3">[3]</a>, 
+        and the ground truth MIDI.
+      </p>
+      <p>
+        Transcribed MIDI files are exported to audio using the default piano sound in GarageBand. 
+        We do not claim state-of-the-art transcription accuracy; our outputs can contain more errors. 
+        However, they are often more expressive and may better reflect the perceived sound.     
+      </p>
+    </section>
+
+    <section id="tc-root" class="audio-table"></section>
+
+    <section id="ood-section" class="intro-block section-gap">
+      <h2>Part 3: Transcription on Out-of-Distribution (OOD) Samples</h2>
+      <p>
+      In addition to standard piano transcription, we present results on OOD audio. 
+      We evaluate on samples from the Piano Concerto Dataset (PCD) <a href="#ref-4">[4]</a>, which contains both piano and orchestral instruments, 
+      and compare against the supervised piano transcription methods of Yan et al. <a href="#ref-2">[2]</a> and Kong et al. <a href="#ref-3">[3]</a>.
+      As these samples fall outside the typical training distribution, none of the methods are expected to perform optimally.
+      </p>
+
+      <p>
+      <strong>Interesting observations</strong>: supervised transcription methods (Yan et al. and Kong et al.) tend to focus primarily on the piano component, 
+      whereas Music-JEPA often produces piano actions that also reflect the surrounding orchestral texture, resulting in outputs that more closely match the overall audio.
+      </p>
+    </section>
+
+    <section id="ood-root" class="audio-table ood-audio-table"></section>
+  
+    <section class="intro-block section-gap" id="references-section">
+      <h2>References</h2>
+
+      <ol class="reference-list">
+        <li id="ref-1">
+          H. Zhang, K. Fang, Z. Wang, and I. Fujinaga,
+          “<a href="https://arxiv.org/abs/2507.04230" target="_blank" rel="noopener noreferrer">
+          High-resolution sustain pedal depth estimation from piano audio across room acoustics
+          </a>,”
+          in <em>Proceedings of the 26th International Society for Music Information Retrieval Conference (ISMIR)</em>, 2025.
+        </li>
+
+        <li id="ref-2">
+          Y. Yan and Z. Duan,
+          “<a href="https://arxiv.org/abs/2404.09466" target="_blank" rel="noopener noreferrer">
+          Scoring time intervals using non-hierarchical transformer for automatic piano transcription
+          </a>,”
+          in <em>Proceedings of the 26th International Society for Music Information Retrieval Conference (ISMIR)</em>, 2024.
+        </li>
+
+        <li id="ref-3">
+          Q. Kong, B. Li, X. Song, Y. Wan, and Y. Wang,
+          “<a href="https://arxiv.org/abs/2507.04230" target="_blank" rel="noopener noreferrer">
+          High-resolution piano transcription with pedals by regressing onset and offset times
+          </a>,”
+          <em>IEEE/ACM Transactions on Audio, Speech, and Language Processing (TASLP)</em>, 2021.
+        </li>
+
+        <li id="ref-4">
+          Y. Özer, S. Schwär, V. Arifi-Müller, J. Lawrence, E. Sen, and M. Müller,
+          “<a href="https://transactions.ismir.net/articles/10.5334/tismir.160" target="_blank" rel="noopener noreferrer">
+          Piano Concerto Dataset (PCD): A Multitrack Dataset of Piano Concertos
+          </a>,”
+          <em>Transactions of the International Society for Music Information Retrieval (TISMIR)</em>, 2023.
+        </li>
+      </ol>
+    </section>
+  </main>
+
+<script>
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+
+  // save scroll position
+  window.addEventListener("beforeunload", () => {
+    sessionStorage.setItem("scrollY", window.scrollY);
+  });
+
+  const samples = [1, 2, 3, 4];
+
+  function img(path, alt, cls = "") {
+    return `<img loading="lazy" class="${cls}" src="${path}" alt="${alt}">`;
+  }
+
+  function audio(path) {
+    return `<audio controls preload="metadata" src="${path}"></audio>`;
+  }
+
+  function row(label, stateImg, actionImg, resultImg, stateAudio, actionAudio, resultAudio) {
+    return `
+      <div class="row-label">${label}</div>
+
+      <div class="sample-cell">
+        <div class="img-wrapper">
+          ${img(stateImg, label + ' state')}
+        </div>
+        ${audio(stateAudio)}
+      </div>
+
+      <div class="op-cell">+</div>
+
+      <div class="sample-cell">
+        <div class="img-wrapper">
+          ${img(actionImg, label + ' action')}
+        </div>
+        ${audio(actionAudio)}
+      </div>
+
+      <div class="op-cell arrow-cell">→</div>
+
+      <div class="sample-cell result-cell">
+        <div class="img-wrapper">
+          ${img(resultImg, label + ' result')}
+        </div>
+        ${audio(resultAudio)}
+      </div>
+    `;
+  }
+  
+  function sampleCard(i) {
+    const prefix = `assets/demo/sample_${i}`;
+    return `
+      <article class="sample-card">
+         <!--
+        <div class="sample-card-header">
+          <h3>Sample #${i}</h3>
+        </div>
+        -->
+
+
+        <div class="sample-grid">
+          <div></div>
+          <div class="col-header">State</div>
+          <div></div>
+          <div class="col-header">Action</div>
+          <div></div>
+          <div class="col-header">Result: current + future</div>
+
+          ${row(
+            'Ground truth',
+            `${prefix}_spec_curr.png`,
+            `${prefix}_pr_gt.png`,
+            `${prefix}_spec_gt.png`,
+            `${prefix}_spec_curr.wav`,
+            `${prefix}_pr_gt.mid.wav`,
+            `${prefix}_spec_gt.wav`
+          )}
+
+          ${row(
+            'Prediction',
+            `${prefix}_spec_curr.png`,
+            `${prefix}_pr_gt.png`,
+            `${prefix}_spec_pred.png`,
+            `${prefix}_spec_curr.wav`,
+            `${prefix}_pr_gt.mid.wav`,
+            `${prefix}_spec_pred.wav`
+          )}
+
+          ${row(
+            'Counterfactual prediction',
+            `${prefix}_spec_curr.png`,
+            `${prefix}_pr_aug.png`,
+            `${prefix}_spec_pred_aug.png`,
+            `${prefix}_spec_curr.wav`,
+            `${prefix}_pr_aug.mid.wav`,
+            `${prefix}_spec_pred_aug.wav`
+          )}
+        </div>
+      </article>
+    `;
+  }
+
+  let currentSample = 1;
+
+  function renderTabs() {
+    document.getElementById("sample-tabs").innerHTML = samples.map(i => `
+      <button class="sample-tab ${i === currentSample ? "active" : ""}" onclick="showSample(${i})">
+        Sample ${i}
+      </button>
+    `).join("");
+  }
+
+  function showSample(i) {
+    currentSample = i;
+    document.getElementById("demo-root").innerHTML = sampleCard(i);
+    renderTabs();
+  }
+
+  function renderAudioTable(rootId, rows) {
+    document.getElementById(rootId).innerHTML = `
+      <div class="audio-header">Example</div>
+      <div class="audio-header">Original audio</div>
+      <div class="audio-header">Ours</div>
+      <div class="audio-header">Yan et al.</div>
+      <div class="audio-header">Kong et al.</div>
+      <div class="audio-header">Ground truth</div>
+
+      ${rows.map((r, idx) => `
+        <div class="audio-label">
+          <strong>Example ${idx + 1}</strong>
+          <span>${r.name}</span>
+        </div>
+
+        <div class="audio-cell">${audio(r.original)}</div>
+        <div class="audio-cell">${audio(r.ours)}</div>
+        <div class="audio-cell">${audio(r.yan)}</div>
+        <div class="audio-cell">${audio(r.kong)}</div>
+        <div class="audio-cell">${audio(r.gt)}</div>
+      `).join("")}
+    `;
+  }
+
+  function renderAudioTableOod(rootId, rows) {
+    document.getElementById(rootId).innerHTML = `
+      <div class="audio-header">Example</div>
+      <div class="audio-header">Original audio</div>
+      <div class="audio-header">Ours</div>
+      <div class="audio-header">Yan et al.</div>
+      <div class="audio-header">Kong et al.</div>
+
+      ${rows.map((r, idx) => `
+        <div class="audio-label">
+          <strong>Example ${idx + 1}</strong>
+          <!-- <span>${r.name}</span> -->
+          <span class="ood-name">${r.name}</span>
+        </div>
+
+        <div class="audio-cell">${audio(r.original)}</div>
+        <div class="audio-cell">${audio(r.ours)}</div>
+        <div class="audio-cell">${audio(r.yan)}</div>
+        <div class="audio-cell">${audio(r.kong)}</div>
+      `).join("")}
+    `;
+  }
+
+  const tcMetadata = [
+    {
+      id: "175",
+      composer: "Liszt",
+      title: "Concert Etude “Waldesrauschen”"
+    },
+    {
+      id: "377",
+      composer: "Schubert",
+      title: "Sonata in A Major, D. 664"
+    },
+    {
+      id: "619",
+      composer: "Chopin",
+      title: "Nocturne Op. 27 No. 1"
+    },
+    {
+      id: "678",
+      composer: "Chopin",
+      title: "Sonata No. 2, Op. 35"
+    },
+    {
+      id: "742",
+      composer: "Bach",
+      title: "Prelude, WTC I, BWV 858"
+    },
+    {
+      id: "960",
+      composer: "Beethoven",
+      title: "Sonata No. 15, Op. 28"
+    },
+    {
+      id: "1192",
+      composer: "Rachmaninoff",
+      title: "Etude-Tableau Op. 39 No. 1"
+    },
+    {
+      id: "1230",
+      composer: "Rachmaninoff",
+      title: "Prelude Op. 32 No. 12"
+    },
+    {
+      id: "1253",
+      composer: "Mozart",
+      title: "Sonata K. 333"
+    }
+  ];
+
+  const tcRows = tcMetadata.map(r => ({
+    name: `${r.composer} — ${r.title}`,
+    original: `assets/transcription_samples/original_audio/${r.id}.mp3`,
+    ours: `assets/transcription_samples/Ours/${r.id}.mp3`,
+    yan: `assets/transcription_samples/Yan/${r.id}.mp3`,
+    kong: `assets/transcription_samples/Kong/${r.id}.mp3`,
+    gt: `assets/transcription_samples/original_midi/${r.id}.mp3`
+  }));
+
+  const oodMetadata = [
+    {
+      file: "Schumann_Op054-01-mm034-040_ES-V2_OP_reverb_schu.mp3",
+      composer: "Schumann",
+      work: "Op. 54 No. 1",
+      mvt: "",
+      mm: "mm. 34–40"
+    },
+    {
+      file: "Rachmaninoff_Op018-02-mm089-093_JL_OP_reverb.mp3",
+      composer: "Rachmaninoff",
+      work: "Op. 18 No. 2",
+      mvt: "",
+      mm: "mm. 89–93"
+    },
+    {
+      file: "Rachmaninoff_Op018-03-mm167-177_JL_OP_reverb.mp3",
+      composer: "Rachmaninoff",
+      work: "Op. 18 No. 3",
+      mvt: "",
+      mm: "mm. 167–177"
+    },
+    {
+      file: "Mozart_KV467-02-mm037-039_YO-V1_OP_reverb.mp3",
+      composer: "Mozart",
+      work: "K. 467",
+      mvt: "",
+      mm: "mm. 37–39"
+    },
+    {
+      file: "Tschaikovsky_Op023-01-mm030-036_ES-V2_OP_reverb.mp3",
+      composer: "Tchaikovsky",
+      work: "Op. 23 No. 1",
+      mvt: "",
+      mm: "mm. 30–36"
+    },
+    {
+      file: "Bach_BWV1056-01-mm021-028_YO-V1_OP_reverb.mp3",
+      composer: "Bach",
+      work: "BWV 1056",
+      mvt: "",
+      mm: "mm. 21–28"
+    },
+  ];
+
+  const oodRows = oodMetadata.map(r => ({
+    name: `
+      <div class="ood-title">
+        ${r.composer} — ${r.work}
+      </div>
+      <div class="ood-subtitle">
+        ${r.mvt ? r.mvt + ", " : ""}${r.mm}
+      </div>
+    `,
+    original: `assets/ood_samples/audio/${r.file}`,
+    ours: `assets/ood_samples/ours_synthesized/${r.file}`,
+    yan: `assets/ood_samples/transkun_synthesized/${r.file}`,
+    kong: `assets/ood_samples/kong_synthesized/${r.file}`
+  }));
+
+  function prettyName(filename) {
+    return filename
+      .replace(".mp3", "")
+      .replaceAll("_", " ");
+  }
+
+  function fileStem(filename) {
+    return filename.replace(".mp3", "");
+  }
+
+  function oodVisualRow(label, imgPath, audioPath) {
+    return `
+      <div class="ood-visual-label">${label}</div>
+      <div class="ood-visual-cell">
+        <img loading="lazy" src="${imgPath}" alt="${label}">
+        ${audio(audioPath)}
+      </div>
+    `;
+  }
+
+  function oodVisualCard(filename, idx) {
+    const stem = fileStem(filename);
+
+    return `
+      <article class="ood-visual-card">
+        <div class="ood-visual-header">
+          <h3>Example ${idx + 1}</h3>
+          <p>${prettyName(filename)}</p>
+        </div>
+
+        <div class="ood-visual-grid">
+          ${oodVisualRow(
+            "Original audio",
+            `assets/ood_samples/audio_figs/${stem}.png`,
+            `assets/ood_samples/audio/${filename}`
+          )}
+
+          ${oodVisualRow(
+            "Ours",
+            `assets/ood_samples/ours_pr_figs/${stem}.png`,
+            `assets/ood_samples/ours_synthesized/${filename}`
+          )}
+
+          ${oodVisualRow(
+            "Kong et al.",
+            `assets/ood_samples/kong_pr_figs/${stem}.png`,
+            `assets/ood_samples/kong_synthesized/${filename}`
+          )}
+        </div>
+      </article>
+    `;
+  }
+
+  let currentOODVisual = 0;
+
+  function renderOODVisualTabs() {
+    document.getElementById("ood-visual-tabs").innerHTML = oodFiles.map((filename, idx) => `
+      <button class="sample-tab ${idx === currentOODVisual ? "active" : ""}" onclick="showOODVisual(${idx})">
+        Example ${idx + 1}
+      </button>
+    `).join("");
+  }
+
+  function showOODVisual(idx) {
+    currentOODVisual = idx;
+    document.getElementById("ood-visual-root").innerHTML = oodVisualCard(oodFiles[idx], idx);
+    renderOODVisualTabs();
+  }
+
+  renderAudioTable("tc-root", tcRows);
+  renderAudioTableOod("ood-root", oodRows);
+  showSample(1);
+  showOODVisual(0);
+
+  // restore scroll AFTER layout settles
+  setTimeout(() => {
+    const y = sessionStorage.getItem("scrollY");
+    if (y !== null) {
+      window.scrollTo(0, Number(y));
+    }
+  }, 100);
+
+</script>
+</body>
+</html>
